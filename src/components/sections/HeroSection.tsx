@@ -1,5 +1,5 @@
 import Spline from "@splinetool/react-spline";
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import GlitchText from "@/components/animations/GlitchText";
 import FlickerText from "@/components/animations/FlickerText";
 import TypewriterText from "@/components/animations/TypewriterText";
@@ -9,11 +9,39 @@ import FloatingParticles from "@/components/backgrounds/FloatingParticles";
 import AnimatedGrid from "@/components/backgrounds/AnimatedGrid";
 import { ArrowDown, Github, Linkedin, Mail, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero.png";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const HeroSection: React.FC = () => {
   const { mode } = useTheme();
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  // Parallax effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springConfig = { damping: 25, stiffness: 150 };
+  const x = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
+  const y = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (imageRef.current) {
+        const rect = imageRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const x = (e.clientX - centerX) / rect.width;
+        const y = (e.clientY - centerY) / rect.height;
+        
+        mouseX.set(x);
+        mouseY.set(y);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
   
   const scrollToAbout = () => {
     const aboutSection = document.getElementById("about");
@@ -83,7 +111,7 @@ const HeroSection: React.FC = () => {
       {mode === 'dark' && (
         <>
           <motion.div
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full z-5"
+            className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full z-5"
             style={{ background: "var(--gradient-glow)", filter: "blur(60px)" }}
             animate={{
               scale: [1, 1.2, 1],
@@ -93,7 +121,7 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full z-5"
+            className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[400px] md:h-[400px] rounded-full z-5"
             style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.2), transparent)", filter: "blur(40px)" }}
             animate={{
               scale: [1.2, 1, 1.2],
@@ -293,10 +321,22 @@ const HeroSection: React.FC = () => {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Replace this src with your actual photo path */}
-                  <img
+                  <motion.img
+                    ref={imageRef}
                     src={heroImage}
                     alt="Nagarajan"
                     className="w-full h-full object-cover"
+                    style={{ x, y }}
+                    animate={{
+                      rotate: [0, 0.5, -0.5, 0.5, 0],
+                      scale: [1, 1.02, 0.98, 1.02, 1]
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      repeat: Infinity,
+                      repeatDelay: 4,
+                      ease: "easeInOut"
+                    }}
                     onError={(e) => {
                       // Fallback if image doesn't exist
                       const target = e.target as HTMLImageElement;
@@ -361,10 +401,10 @@ const HeroSection: React.FC = () => {
       </motion.button>
 
       {/* Decorative corners - More prominent in light mode */}
-      <div className={`absolute top-20 left-10 w-20 h-20 border-l-2 border-t-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
-      <div className={`absolute top-20 right-10 w-20 h-20 border-r-2 border-t-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
-      <div className={`absolute bottom-20 left-10 w-20 h-20 border-l-2 border-b-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
-      <div className={`absolute bottom-20 right-10 w-20 h-20 border-r-2 border-b-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
+      <div className={`hidden md:block absolute top-20 left-10 w-20 h-20 border-l-2 border-t-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
+      <div className={`hidden md:block absolute top-20 right-10 w-20 h-20 border-r-2 border-t-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
+      <div className={`hidden md:block absolute bottom-20 left-10 w-20 h-20 border-l-2 border-b-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
+      <div className={`hidden md:block absolute bottom-20 right-10 w-20 h-20 border-r-2 border-b-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
     </section>
   );
 };

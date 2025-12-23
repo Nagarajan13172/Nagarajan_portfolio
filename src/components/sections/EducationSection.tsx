@@ -57,7 +57,7 @@ const EducationSection: React.FC = () => {
       <FloatingParticles count={20} className="opacity-20" />
       
       <motion.div 
-        className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full opacity-20"
+        className="absolute top-1/4 right-0 w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full opacity-20"
         style={{ background: "var(--gradient-glow)" }}
         animate={{ 
           scale: [1, 1.2, 1],

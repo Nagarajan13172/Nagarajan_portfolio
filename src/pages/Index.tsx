@@ -65,7 +65,7 @@ const MainContent = () => {
 const Index = () => {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <div className="min-h-screen bg-background text-foreground overflow-x-hidden w-full max-w-full">
         <Navigation />
         <MainContent />
         <Footer />

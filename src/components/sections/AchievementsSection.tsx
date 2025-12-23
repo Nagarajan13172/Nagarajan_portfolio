@@ -110,7 +110,7 @@ const AchievementsSection: React.FC = () => {
       <FloatingParticles count={30} className="opacity-20" />
       
       <motion.div 
-        className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full opacity-20"
+        className="absolute top-0 left-0 w-[400px] h-[400px] md:w-[800px] md:h-[800px] rounded-full opacity-20"
         style={{ background: "var(--gradient-glow)" }}
         animate={{ 
           scale: [1, 1.3, 1],

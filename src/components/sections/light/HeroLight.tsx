@@ -1,8 +1,38 @@
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
 import heroImage from "@/assets/hero.png";
+import { useEffect, useRef } from "react";
 
 const HeroLight: React.FC = () => {
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  // Parallax effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springConfig = { damping: 25, stiffness: 150 };
+  const x = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
+  const y = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (imageRef.current) {
+        const rect = imageRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const x = (e.clientX - centerX) / rect.width;
+        const y = (e.clientY - centerY) / rect.height;
+        
+        mouseX.set(x);
+        mouseY.set(y);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
       {/* Subtle grid background */}
@@ -15,8 +45,8 @@ const HeroLight: React.FC = () => {
       }} />
 
       {/* Gradient orbs */}
-      <div className="absolute top-20 right-20 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-20 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute top-20 right-20 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-20 w-[250px] h-[250px] md:w-[400px] md:h-[400px] bg-accent/5 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16 max-w-7xl mx-auto">
@@ -152,10 +182,22 @@ const HeroLight: React.FC = () => {
 
             {/* Image container */}
             <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl shadow-primary/20">
-              <img
+              <motion.img
+                ref={imageRef}
                 src={heroImage}
                 alt="Nagarajan"
                 className="w-full h-full object-cover"
+                style={{ x, y }}
+                animate={{
+                  rotate: [0, 0.5, -0.5, 0.5, 0],
+                  scale: [1, 1.02, 0.98, 1.02, 1]
+                }}
+                transition={{
+                  duration: 0.4,
+                  repeat: Infinity,
+                  repeatDelay: 4,
+                  ease: "easeInOut"
+                }}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -177,7 +219,7 @@ const HeroLight: React.FC = () => {
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 -left-4 px-4 py-2 bg-white rounded-lg shadow-lg border border-primary/20"
+              className="hidden sm:block absolute -top-4 -left-4 px-4 py-2 bg-white rounded-lg shadow-lg border border-primary/20"
             >
               <p className="text-sm font-semibold text-primary">1+ Years</p>
             </motion.div>
@@ -185,7 +227,7 @@ const HeroLight: React.FC = () => {
             <motion.div
               animate={{ y: [10, -10, 10] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute -bottom-4 -right-4 px-4 py-2 bg-white rounded-lg shadow-lg border border-primary/20"
+              className="hidden sm:block absolute -bottom-4 -right-4 px-4 py-2 bg-white rounded-lg shadow-lg border border-primary/20"
             >
               <p className="text-sm font-semibold text-primary">50+ Projects</p>
             </motion.div>

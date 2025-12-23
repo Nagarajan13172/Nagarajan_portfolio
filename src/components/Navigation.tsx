@@ -40,6 +40,25 @@ const Navigation: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+  }, [isOpen]);
+
   const handleNavClick = (href: string) => {
     setIsOpen(false);
     const element = document.querySelector(href);
@@ -118,10 +137,11 @@ const Navigation: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 z-30 md:hidden"
+            className="fixed inset-0 z-30 md:hidden overflow-hidden"
+            style={{ width: '100vw', height: '100vh' }}
           >
             <div className="absolute inset-0 bg-background/95 backdrop-blur-xl">
-              <div className="flex flex-col items-center justify-center h-full gap-8">
+              <div className="flex flex-col items-center justify-center h-full gap-8 px-6">
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.label}

@@ -41,7 +41,7 @@ const AboutSection: React.FC = () => {
 
       {/* Background Elements */}
       <motion.div 
-        className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full opacity-20 -translate-y-1/2 translate-x-1/2"
+        className="absolute top-0 right-0 w-[400px] h-[400px] md:w-[700px] md:h-[700px] rounded-full opacity-20 -translate-y-1/2 translate-x-1/2"
         style={{ background: "var(--gradient-glow)" }}
         animate={{ 
           scale: [1, 1.2, 1],
@@ -135,21 +135,21 @@ const AboutSection: React.FC = () => {
                   rotate: [0, 2, -2, 0],
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
-                className="absolute -bottom-8 -right-8 px-8 py-5 rounded-2xl glass-effect glow-effect z-20"
+                className="absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 px-6 py-4 md:px-8 md:py-5 rounded-2xl glass-effect glow-effect z-20"
               >
                 <motion.span 
-                  className="text-3xl font-bold gradient-text block"
+                  className="text-2xl md:text-3xl font-bold gradient-text block"
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   1+
                 </motion.span>
-                <p className="text-sm text-muted-foreground">Years of Experience</p>
+                <p className="text-xs md:text-sm text-muted-foreground">Years of Experience</p>
               </motion.div>
 
               {/* Decorative elements */}
               <motion.div
-                className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary/30"
+                className="hidden md:block absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary/30"
                 animate={{ 
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5],
@@ -157,7 +157,7 @@ const AboutSection: React.FC = () => {
                 transition={{ duration: 3, repeat: Infinity }}
               />
               <motion.div
-                className="absolute top-1/2 -left-6 w-3 h-3 rounded-full bg-accent/50"
+                className="hidden md:block absolute top-1/2 -left-6 w-3 h-3 rounded-full bg-accent/50"
                 animate={{ 
                   y: [0, -20, 0],
                 }}

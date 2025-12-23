@@ -42,7 +42,7 @@ const ContactSection: React.FC = () => {
     <section id="contact" className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 dot-grid-bg opacity-20" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full opacity-20 translate-y-1/2"
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] rounded-full opacity-20 translate-y-1/2"
         style={{ background: "var(--gradient-glow)" }}
       />
 
