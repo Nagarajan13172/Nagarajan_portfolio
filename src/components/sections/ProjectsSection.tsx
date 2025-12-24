@@ -6,6 +6,8 @@ import { useState } from "react";
 import vpnImage from "@/assets/project/vpn.png";
 import facultyPortalImage from "@/assets/project/faculty.png";
 import registrationPortalImage from "@/assets/project/graduation.png";
+import electionImage from "@/assets/project/election.png";
+
 
 
 const projects = [
@@ -40,15 +42,15 @@ const projects = [
     color: "from-rose-500 to-orange-500",
     featured: false,
   },
-  {
+    {
     id: 4,
-    title: "Task Management",
-    description: "Collaborative project management tool with kanban boards, time tracking, and team features.",
-    image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&auto=format&fit=crop&q=80",
-    tags: ["Vue.js", "Express", "MongoDB"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    featured: false,
+    title: "University Online Voting System",
+    description: "A secure and transparent online voting system developed for a university president election, enabling authenticated student voting, real-time vote counting, and an admin-controlled results dashboard built for accuracy and integrity.",
+    image: electionImage,
+    tags: ["Next.js", "React", "Node.js", "MySQL", "Authentication", "Security"],
+    github: "https://github.com/Nagarajan13172/PU_Election",
+    live: "https://pu-election-vjxs.vercel.app/vote",
+    color: "from-sky-500 to-indigo-500"
   },
   {
     id: 5,

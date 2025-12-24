@@ -3,6 +3,7 @@ import { ExternalLink, Github, ArrowRight } from "lucide-react";
 import vpnImage from "@/assets/project/vpn.png";
 import facultyPortalImage from "@/assets/project/faculty.png";
 import registrationPortalImage from "@/assets/project/graduation.png";
+import electionImage from "@/assets/project/election.png";
 
 const projects = [
   {
@@ -35,6 +36,16 @@ const projects = [
     live: "https://graduate.periyaruniversity.ac.in/admin",
     color: "from-rose-500 to-orange-500",
     featured: false,
+  },
+  {
+    id: 4,
+    title: "University Online Voting System",
+    description: "A secure and transparent online voting system developed for a university president election, enabling authenticated student voting, real-time vote counting, and an admin-controlled results dashboard built for accuracy and integrity.",
+    image: electionImage,
+    tags: ["Next.js", "React", "Node.js", "MySQL", "Authentication", "Security"],
+    github: "https://github.com/Nagarajan13172/PU_Election",
+    live: "https://pu-election-vjxs.vercel.app/vote",
+    color: "from-sky-500 to-indigo-500"
   },
 ];
 
