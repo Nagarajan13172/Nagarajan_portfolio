@@ -12,9 +12,8 @@ const projects = [
     description: "A secure VPN platform enabling encrypted tunnels for remote devices, private network access, and protected communication using modern tunneling protocols with centralized authentication.",
     image: vpnImage,
     tags: ["WireGuard", "Node.js", "Linux", "Networking", "Security"],
-    liveUrl: "https://vpn.youngstorage.in/auth/login",
+    liveUrl: "https://vpn.youngstorage.in",
     githubUrl: "https://github.com/nagarajan13172",
-    featured: true,
   },
   {
     id: 2,
@@ -35,7 +34,6 @@ const projects = [
     github: "https://github.com/Nagarajan13172/Graduation-Frontend-Admin",
     live: "https://graduate.periyaruniversity.ac.in/admin",
     color: "from-rose-500 to-orange-500",
-    featured: false,
   },
   {
     id: 4,
