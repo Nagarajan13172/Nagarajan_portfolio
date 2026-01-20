@@ -7,6 +7,7 @@ import vpnImage from "@/assets/project/vpn.png";
 import facultyPortalImage from "@/assets/project/faculty.png";
 import registrationPortalImage from "@/assets/project/graduation.png";
 import electionImage from "@/assets/project/election.png";
+import dofyImage from "@/assets/project/dofy.png";
 
 
 
@@ -54,12 +55,12 @@ const projects = [
   },
   {
     id: 5,
-    title: "Crypto Tracker",
-    description: "Real-time cryptocurrency tracking with portfolio management and price alerts.",
-    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=80",
-    tags: ["React", "WebSocket", "Chart.js"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
+    title: "Dofy - Sell Old Gadgets",
+    description: "A professional re-commerce platform for selling used electronics with instant valuation, corporate trade-in solutions, and a streamlined user journey for gadget liquidation.",
+    image: dofyImage,
+    tags: ["Next.js", "React", "Tailwind CSS", "E-commerce"],
+    liveUrl: "https://www.dofy.in/",
+    githubUrl: "https://github.com/nagarajan13172",
     featured: false,
   },
   {

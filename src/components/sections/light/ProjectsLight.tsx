@@ -4,6 +4,7 @@ import vpnImage from "@/assets/project/vpn.png";
 import facultyPortalImage from "@/assets/project/faculty.png";
 import registrationPortalImage from "@/assets/project/graduation.png";
 import electionImage from "@/assets/project/election.png";
+import dofyImage from "@/assets/project/dofy.png";
 
 const projects = [
   {
@@ -44,6 +45,16 @@ const projects = [
     github: "https://github.com/Nagarajan13172/PU_Election",
     live: "https://pu-election-vjxs.vercel.app/vote",
     color: "from-sky-500 to-indigo-500"
+  },
+  {
+    id: 5,
+    title: "Dofy - Sell Old Gadgets",
+    description: "A professional re-commerce platform for selling used electronics with instant valuation, corporate trade-in solutions, and a streamlined user journey for gadget liquidation.",
+    image: dofyImage,
+    tags: ["Next.js", "React", "Tailwind CSS", "E-commerce"],
+    github: "https://github.com/nagarajan13172",
+    live: "https://www.dofy.in/",
+    color: "from-emerald-500 to-teal-500"
   },
 ];
 
