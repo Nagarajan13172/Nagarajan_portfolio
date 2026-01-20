@@ -1,19 +1,58 @@
 import { motion } from "motion/react";
 import { Mail, MapPin, Phone, Send, MessageSquare } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const contactInfo = [
-  { icon: Mail, label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
-  { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567" },
-  { icon: MapPin, label: "Location", value: "San Francisco, CA", href: "#" },
+  { icon: Mail, label: "Email", value: "snagarajan0209@gmail.com", href: "mailto:snagarajan0209@gmail.com" },
+  { icon: Phone, label: "Phone", value: "9487142487", href: "tel:+9487142487" },
+  { icon: MapPin, label: "Location", value: "Tamilnadu, Salem", href: "#" },
 ];
 
 const ContactLight: React.FC = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+
+    try {
+      // 1. Save to Firebase
+      const { collection, addDoc } = await import("firebase/firestore");
+      const { db } = await import("@/lib/firebase-config");
+
+      await addDoc(collection(db, "contacts"), {
+        ...formData,
+        timestamp: new Date().toISOString()
+      });
+
+      // 2. Trigger Telegram Message
+      const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+      const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+
+      if (botToken && chatId) {
+        const text = `New Contact Form Submission! (Light Mode)\n\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`;
+
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: chatId, text: text })
+        });
+      }
+
+      // We need a toast here but this component doesn't import sonner yet.
+      // For now, simple alert or console? The design usually implies toasts.
+      // I'll check imports next step and add toast if creating it effectively.
+      // Actually, let's just use console for now as I need to fix imports too.
+      toast.success("Message sent successfully! I'll get back to you soon.");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -47,7 +86,7 @@ const ContactLight: React.FC = () => {
             <div>
               <h3 className="text-3xl font-bold mb-4">Let's talk about your project</h3>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                I'm always interested in hearing about new projects and opportunities. 
+                I'm always interested in hearing about new projects and opportunities.
                 Whether you have a question or just want to say hi, feel free to reach out!
               </p>
             </div>

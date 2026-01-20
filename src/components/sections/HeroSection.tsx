@@ -19,7 +19,7 @@ const HeroSection: React.FC = () => {
   // Parallax effect
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   const springConfig = { damping: 25, stiffness: 150 };
   const x = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
   const y = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
@@ -30,10 +30,10 @@ const HeroSection: React.FC = () => {
         const rect = imageRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+
         const x = (e.clientX - centerX) / rect.width;
         const y = (e.clientY - centerY) / rect.height;
-        
+
         mouseX.set(x);
         mouseY.set(y);
       }
@@ -42,7 +42,7 @@ const HeroSection: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
-  
+
   const scrollToAbout = () => {
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
@@ -91,7 +91,7 @@ const HeroSection: React.FC = () => {
         <>
           {/* Base white/light background */}
           <div className="absolute inset-0 bg-background z-10" />
-          
+
           {/* Grid pattern background */}
           <div className="absolute inset-0 z-11" style={{
             backgroundImage: `
@@ -100,7 +100,7 @@ const HeroSection: React.FC = () => {
             `,
             backgroundSize: '50px 50px'
           }} />
-          
+
           {/* Subtle gradient glow spots */}
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl z-12" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl z-12" />
@@ -136,7 +136,7 @@ const HeroSection: React.FC = () => {
       {/* Content */}
       <div className="relative z-20 container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto">
-          
+
           {/* Left Side - Text Content */}
           <div className="flex-1 text-center lg:text-left">
             {/* Animated Badge */}
@@ -270,7 +270,7 @@ const HeroSection: React.FC = () => {
               {[
                 { icon: Github, href: "https://github.com", label: "GitHub" },
                 { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:hello@example.com", label: "Email" },
+                { icon: Mail, href: "mailto:snagarajan0209@gmail.com", label: "Email" },
               ].map((social) => (
                 <Magnet key={social.label} magnetStrength={1} padding={60}>
                   <motion.a
@@ -312,7 +312,7 @@ const HeroSection: React.FC = () => {
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
               />
-              
+
               {/* Photo Container */}
               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                 <motion.div
@@ -355,7 +355,7 @@ const HeroSection: React.FC = () => {
                     }}
                   />
                 </motion.div>
-                
+
                 {/* Decorative rings */}
                 <motion.div
                   className="absolute inset-0 rounded-full border-2 border-primary/20"
@@ -385,7 +385,7 @@ const HeroSection: React.FC = () => {
         aria-label="Scroll to about section"
       >
         <motion.div
-          animate={{ 
+          animate={{
             y: [0, 15, 0],
             boxShadow: [
               "0 0 20px hsl(var(--primary) / 0.3)",

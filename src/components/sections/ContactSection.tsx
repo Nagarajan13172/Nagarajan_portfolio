@@ -17,19 +17,48 @@ const ContactSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    toast.success("Message sent successfully! I'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
+
+    try {
+      // 1. Save to Firebase
+      // Dynamic import to avoid SSR issues if any, though here it is client side
+      const { collection, addDoc } = await import("firebase/firestore");
+      const { db } = await import("@/lib/firebase-config");
+
+      await addDoc(collection(db, "contacts"), {
+        ...formData,
+        timestamp: new Date().toISOString()
+      });
+
+      // 2. Trigger Telegram Message
+      const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+      const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+
+      if (botToken && chatId) {
+        const text = `New Contact Form Submission!\n\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}`;
+
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: chatId, text: text })
+        });
+      } else {
+        console.warn("Telegram credentials not found in env vars");
+      }
+
+      toast.success("Message sent successfully! I'll get back to you soon.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "hello@johndoe.dev", href: "mailto:hello@johndoe.dev" },
-    { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, label: "Location", value: "San Francisco, CA", href: null },
+    { icon: Mail, label: "Email", value: "snagarajan0209@gmail.com", href: "mailto:snagarajan0209@gmail.com" },
+    { icon: Phone, label: "Phone", value: "9487142487", href: "tel:+9487142487" },
+    { icon: MapPin, label: "Location", value: "Tamilnadu, Salem", href: null },
   ];
 
   const socialLinks = [
@@ -65,8 +94,8 @@ const ContactSection: React.FC = () => {
               <div>
                 <h3 className="text-2xl font-bold mb-4">Let's build something amazing</h3>
                 <p className="text-muted-foreground text-lg">
-                  I'm always excited to work on new projects and collaborate with 
-                  creative people. Whether you have a project in mind or just want 
+                  I'm always excited to work on new projects and collaborate with
+                  creative people. Whether you have a project in mind or just want
                   to say hello, feel free to reach out!
                 </p>
               </div>
@@ -147,7 +176,7 @@ const ContactSection: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
-                    placeholder="john@example.com"
+                    placeholder="snagarajan0209@gmail.com"
                     required
                   />
                 </div>

@@ -9,7 +9,7 @@ const HeroLight: React.FC = () => {
   // Parallax effect
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   const springConfig = { damping: 25, stiffness: 150 };
   const x = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
   const y = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
@@ -20,10 +20,10 @@ const HeroLight: React.FC = () => {
         const rect = imageRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+
         const x = (e.clientX - centerX) / rect.width;
         const y = (e.clientY - centerY) / rect.height;
-        
+
         mouseX.set(x);
         mouseY.set(y);
       }
@@ -50,7 +50,7 @@ const HeroLight: React.FC = () => {
 
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16 max-w-7xl mx-auto">
-          
+
           {/* Left Side - Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -103,7 +103,7 @@ const HeroLight: React.FC = () => {
               transition={{ delay: 0.5 }}
               className="text-lg text-muted-foreground mb-8 leading-relaxed"
             >
-              I craft beautiful, performant web experiences with modern technologies. 
+              I craft beautiful, performant web experiences with modern technologies.
               Passionate about clean code, user experience, and innovative solutions.
             </motion.p>
 
@@ -123,7 +123,7 @@ const HeroLight: React.FC = () => {
                 View My Work
                 <ArrowRight className="w-5 h-5" />
               </motion.a>
-              
+
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
@@ -144,7 +144,7 @@ const HeroLight: React.FC = () => {
               {[
                 { icon: Github, href: "https://github.com", label: "GitHub" },
                 { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:hello@example.com", label: "Email" },
+                { icon: Mail, href: "mailto:snagarajan0209@gmail.com", label: "Email" },
               ].map((social) => (
                 <motion.a
                   key={social.label}
