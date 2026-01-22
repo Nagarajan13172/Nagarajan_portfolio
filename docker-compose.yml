@@ -1,0 +1,26 @@
+services:
+  portfolio:
+    image: ghcr.io/nagarajan13172/nagarajan-portfolio:latest
+    container_name: nagarajan_portfolio
+    labels:
+      - traefik.enable=true
+      - traefik.domain=succeedex.in
+      - traefik.http.routers.snagarajan.rule=Host(`snagarajan.me`)
+      - traefik.http.routers.snagarajan.service=snagarajan
+      - traefik.http.routers.snagarajan.entrypoints=websecure
+      - traefik.http.routers.snagarajan.tls=true
+      - traefik.http.routers.snagarajan.tls.certresolver=myresolver
+      - traefik.http.services.snagarajan.loadbalancer.server.port=80
+
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+networks:
+  default:
+    name: traefik
+    external: true
