@@ -28,14 +28,6 @@ const skillCategories = {
     { name: "GraphQL", level: 75, color: "hsl(320 80% 55%)" },
     { name: "Redis", level: 70, color: "hsl(0 80% 50%)" },
   ],
-  tools: [
-    { name: "Git", level: 92, color: "hsl(15 80% 50%)" },
-    { name: "Docker", level: 80, color: "hsl(210 80% 55%)" },
-    { name: "AWS", level: 75, color: "hsl(35 100% 50%)" },
-    { name: "Figma", level: 70, color: "hsl(340 80% 55%)" },
-    { name: "CI/CD", level: 78, color: "hsl(270 60% 55%)" },
-    { name: "Testing", level: 82, color: "hsl(120 60% 45%)" },
-  ],
 };
 
 const AnimatedSkillBar: React.FC<{ 
@@ -269,11 +261,11 @@ const SkillsSection: React.FC = () => {
                   <p className="text-sm text-muted-foreground">DevOps & Design</p>
                 </div>
               </div>
-              <div className="space-y-5 relative z-10">
+              {/* <div className="space-y-5 relative z-10">
                 {skillCategories.tools.map((skill, index) => (
                   <AnimatedSkillBar key={skill.name} {...skill} index={index} />
                 ))}
-              </div>
+              </div> */}
             </motion.div>
           </FadeInSection>
         </div>

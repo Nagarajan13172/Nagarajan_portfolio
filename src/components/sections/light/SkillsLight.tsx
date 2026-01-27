@@ -24,15 +24,6 @@ const skillsData = [
   { name: "MongoDB", category: "Backend", stars: 4, years: "2+", color: "bg-green-100 text-green-700 border-green-300", icon: "🍃" },
   { name: "GraphQL", category: "Backend", stars: 4, years: "2+", color: "bg-green-100 text-green-700 border-green-300", icon: "◈" },
 
-  // DevOps - 4 stars
-  { name: "Docker", category: "DevOps", stars: 4, years: "3+", color: "bg-purple-100 text-purple-700 border-purple-300", icon: "🐳" },
-  { name: "Git", category: "DevOps", stars: 5, years: "5+", color: "bg-purple-100 text-purple-700 border-purple-300", icon: "📦" },
-  { name: "CI/CD", category: "DevOps", stars: 4, years: "2+", color: "bg-purple-100 text-purple-700 border-purple-300", icon: "🔄" },
-
-  // DevOps - 3 stars
-  { name: "AWS", category: "DevOps", stars: 3, years: "2+", color: "bg-purple-100 text-purple-700 border-purple-300", icon: "☁️" },
-  { name: "Kubernetes", category: "DevOps", stars: 3, years: "1+", color: "bg-purple-100 text-purple-700 border-purple-300", icon: "⎈" },
-
   // Tools - 5 stars
   { name: "VS Code", category: "Tools", stars: 5, years: "5+", color: "bg-orange-100 text-orange-700 border-orange-300", icon: "💻" },
   { name: "Figma", category: "Tools", stars: 4, years: "3+", color: "bg-orange-100 text-orange-700 border-orange-300", icon: "🎨" },
