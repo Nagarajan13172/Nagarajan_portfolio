@@ -17,8 +17,7 @@ const skillCategories = {
     { name: "TypeScript", level: 90, color: "hsl(210 100% 60%)" },
     { name: "Next.js", level: 88, color: "hsl(0 0% 80%)" },
     { name: "Tailwind CSS", level: 92, color: "hsl(185 100% 50%)" },
-    { name: "Vue.js", level: 75, color: "hsl(150 100% 45%)" },
-    { name: "React Native", level: 70, color: "hsl(185 100% 50%)" },
+    { name: "Flutter", level: 70, color: "hsl(185 100% 50%)" },
   ],
   backend: [
     { name: "Node.js", level: 88, color: "hsl(120 60% 45%)" },
@@ -26,7 +25,6 @@ const skillCategories = {
     { name: "PostgreSQL", level: 82, color: "hsl(210 80% 55%)" },
     { name: "MongoDB", level: 78, color: "hsl(120 50% 40%)" },
     { name: "GraphQL", level: 75, color: "hsl(320 80% 55%)" },
-    { name: "Redis", level: 70, color: "hsl(0 80% 50%)" },
   ],
 };
 
@@ -165,7 +163,7 @@ const SkillsSection: React.FC = () => {
           </div>
         </FadeInSection>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols2 gap-8">
           {/* Frontend */}
           <FadeInSection delay={0.1}>
             <motion.div 
