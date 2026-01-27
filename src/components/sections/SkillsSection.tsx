@@ -163,7 +163,7 @@ const SkillsSection: React.FC = () => {
           </div>
         </FadeInSection>
 
-        <div className="grid md:grid-cols2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {/* Frontend */}
           <FadeInSection delay={0.1}>
             <motion.div 
