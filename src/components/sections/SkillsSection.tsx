@@ -234,40 +234,6 @@ const SkillsSection: React.FC = () => {
               </div>
             </motion.div>
           </FadeInSection>
-
-          {/* Tools */}
-          <FadeInSection delay={0.3}>
-            <motion.div 
-              className="p-8 rounded-3xl card-gradient border border-border/50 h-full relative overflow-hidden group"
-              whileHover={{ y: -5 }}
-            >
-              <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: "radial-gradient(circle at center, hsl(25 100% 55% / 0.1), transparent 70%)",
-                }}
-              />
-              
-              {/* <div className="flex items-center gap-3 mb-8 relative z-10">
-                <motion.div 
-                  className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center"
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                >
-                  <span className="text-3xl">🛠️</span>
-                </motion.div>
-                <div>
-                  <h3 className="text-2xl font-bold">Tools</h3>
-                  <p className="text-sm text-muted-foreground">DevOps & Design</p>
-                </div>
-              </div> */}
-              {/* <div className="space-y-5 relative z-10">
-                {skillCategories.tools.map((skill, index) => (
-                  <AnimatedSkillBar key={skill.name} {...skill} index={index} />
-                ))}
-              </div> */}
-            </motion.div>
-          </FadeInSection>
         </div>
       </div>
     </section>
