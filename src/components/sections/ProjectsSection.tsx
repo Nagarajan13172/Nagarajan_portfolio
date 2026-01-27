@@ -63,16 +63,16 @@ const projects = [
     githubUrl: "https://github.com/nagarajan13172",
     featured: false,
   },
-  {
-    id: 6,
-    title: "Learning Platform",
-    description: "Online education platform with video courses, quizzes, and progress tracking.",
-    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&auto=format&fit=crop&q=80",
-    tags: ["Next.js", "Prisma", "AWS"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    featured: false,
-  },
+  // {
+  //   id: 6,
+  //   title: "Learning Platform",
+  //   description: "Online education platform with video courses, quizzes, and progress tracking.",
+  //   image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&auto=format&fit=crop&q=80",
+  //   tags: ["Next.js", "Prisma", "AWS"],
+  //   liveUrl: "https://example.com",
+  //   githubUrl: "https://github.com",
+  //   featured: false,
+  // },
 ];
 
 const ProjectCard: React.FC<{
