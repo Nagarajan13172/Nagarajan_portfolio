@@ -248,7 +248,7 @@ const SkillsSection: React.FC = () => {
                 }}
               />
               
-              <div className="flex items-center gap-3 mb-8 relative z-10">
+              {/* <div className="flex items-center gap-3 mb-8 relative z-10">
                 <motion.div 
                   className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center"
                   animate={{ rotate: [0, 10, -10, 0] }}
@@ -260,7 +260,7 @@ const SkillsSection: React.FC = () => {
                   <h3 className="text-2xl font-bold">Tools</h3>
                   <p className="text-sm text-muted-foreground">DevOps & Design</p>
                 </div>
-              </div>
+              </div> */}
               {/* <div className="space-y-5 relative z-10">
                 {skillCategories.tools.map((skill, index) => (
                   <AnimatedSkillBar key={skill.name} {...skill} index={index} />
