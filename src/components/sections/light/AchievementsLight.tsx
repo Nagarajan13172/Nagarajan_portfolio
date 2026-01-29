@@ -9,24 +9,23 @@ import finalsImg from "@/assets/achivements/finals3.jpeg";
 import usImg from "@/assets/achivements/us.jpeg";
 
 const achievements = [
-  {
-    title: "Yukthi CTF Prelims Round 2025",
-    subtitle: "1st Place Winner 🏆 | Capture The Flag Champion",
-    date: "December 13-14, 2025",
-    location: "Arena.Yukthi CTF Prelims",
-    role: "Cybersecurity Expert",
-    description: "Secured 1st place among 361 teams in the prestigious Yukthi CTF Prelims Round 2025. Demonstrated exceptional skills in ethical hacking, cryptography, and cybersecurity challenges, outperforming hundreds of talented competitors.",
+    {
+    title: "Smart India Hackathon 2024 - Grand Finale Finalist",
+    subtitle: "Hardware Edition | Team TECH IQ",
+    date: "December 11-15, 2024",
+    location: "Amal Jyothi College of Engineering, Kanjirappally",
+    role: "Team Leader",
+    description: "Led Team TECH IQ from Periyar University to the Grand Finale of SIH 2024. Developed an innovative app to help students with learning disabilities, solving real-world educational challenges through technology.",
     highlights: [
-      "🥇 1st Place out of 361 competing teams",
-      "🔐 Mastered complex cybersecurity challenges",
-      "💻 Expert in cryptography and exploitation",
-      "⚡ Speed and precision under pressure",
-      "🧠 Advanced problem-solving in CTF scenarios",
-      "🛡️ Ethical hacking and penetration testing"
+      "🏆 Finalist among thousands of teams nationwide",
+      "🎖️ Certified by Ministry of Education & AICTE",
+      "💡 Developed assistive learning app for students with disabilities",
+      "👥 Led a team through intense 5-day national challenge",
+      "⚙️ Hardware Edition - Real-world problem solving"
     ],
-    tags: ["CTF", "Cybersecurity", "Ethical Hacking", "Cryptography", "Winner"],
-    images: [ctfImg],
-    color: "from-purple-500 to-pink-500"
+    tags: ["Hardware", "Education Tech", "Team Leadership", "Innovation"],
+    images: [frndsImg, weImg, shieldImg],
+    color: "from-blue-500 to-cyan-500"
   },
   {
     title: "Yukthi CTF Grand Finale 2025",
@@ -50,24 +49,28 @@ const achievements = [
     color: "from-rose-500 to-pink-500"
   },
   {
-    title: "Smart India Hackathon 2024 - Grand Finale Finalist",
-    subtitle: "Hardware Edition | Team TECH IQ",
-    date: "December 11-15, 2024",
-    location: "Amal Jyothi College of Engineering, Kanjirappally",
-    role: "Team Leader",
-    description: "Led Team TECH IQ from Periyar University to the Grand Finale of SIH 2024. Developed an innovative app to help students with learning disabilities, solving real-world educational challenges through technology.",
+    title: "Yukthi CTF Prelims Round 2025",
+    subtitle: "1st Place Winner 🏆 | Capture The Flag Champion",
+    date: "December 13-14, 2025",
+    location: "Arena.Yukthi CTF Prelims",
+    role: "Cybersecurity Expert",
+    description: "Secured 1st place among 361 teams in the prestigious Yukthi CTF Prelims Round 2025. Demonstrated exceptional skills in ethical hacking, cryptography, and cybersecurity challenges, outperforming hundreds of talented competitors.",
     highlights: [
-      "🏆 Finalist among thousands of teams nationwide",
-      "🎖️ Certified by Ministry of Education & AICTE",
-      "💡 Developed assistive learning app for students with disabilities",
-      "👥 Led a team through intense 5-day national challenge",
-      "⚙️ Hardware Edition - Real-world problem solving"
+      "🥇 1st Place out of 361 competing teams",
+      "🔐 Mastered complex cybersecurity challenges",
+      "💻 Expert in cryptography and exploitation",
+      "⚡ Speed and precision under pressure",
+      "🧠 Advanced problem-solving in CTF scenarios",
+      "🛡️ Ethical hacking and penetration testing"
     ],
-    tags: ["Hardware", "Education Tech", "Team Leadership", "Innovation"],
-    images: [frndsImg, weImg, shieldImg],
-    color: "from-blue-500 to-cyan-500"
-  }
+    tags: ["CTF", "Cybersecurity", "Ethical Hacking", "Cryptography", "Winner"],
+    images: [ctfImg],
+    color: "from-purple-500 to-pink-500"
+  },
 ];
+
+
+
 
 const otherAchievements = [
   {
