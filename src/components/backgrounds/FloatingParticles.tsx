@@ -16,7 +16,7 @@ interface FloatingParticlesProps {
 }
 
 const FloatingParticles: React.FC<FloatingParticlesProps> = ({
-  count = 50,
+  count = 15,
   className = "",
 }) => {
   const particles = useRef<Particle[]>([]);
@@ -45,18 +45,18 @@ const FloatingParticles: React.FC<FloatingParticlesProps> = ({
             height: particle.size,
             background: `hsl(var(--primary) / ${0.2 + Math.random() * 0.4})`,
             boxShadow: `0 0 ${particle.size * 2}px hsl(var(--primary) / 0.5)`,
+            willChange: "transform, opacity",
           }}
           animate={{
             y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 25, 0],
-            scale: [1, 1.5, 1],
-            opacity: [0.3, 0.8, 0.3],
+            x: [0, Math.random() * 30 - 15, 0], // Reduced movement range
+            opacity: [0.2, 0.5, 0.2], // Reduced opacity variance
           }}
           transition={{
             duration: particle.duration,
             delay: particle.delay,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear", // Simplified easing
           }}
         />
       ))}

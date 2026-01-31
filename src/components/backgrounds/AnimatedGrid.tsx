@@ -9,11 +9,23 @@ const AnimatedGrid: React.FC<AnimatedGridProps> = ({ className = "" }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    let animationFrameId: number;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Throttle updates using requestAnimationFrame
+      if (animationFrameId) return;
+
+      animationFrameId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+        animationFrameId = 0;
+      });
     };
+
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -43,7 +55,7 @@ const AnimatedGrid: React.FC<AnimatedGridProps> = ({ className = "" }) => {
           </radialGradient>
         </defs>
         <rect width="100%" height="100%" fill="url(#grid)" />
-        
+
         {/* Mouse glow effect */}
         <motion.circle
           cx={mousePosition.x}

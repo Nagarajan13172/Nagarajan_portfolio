@@ -65,13 +65,13 @@ const HeroSection: React.FC = () => {
       {/* Animated Grid Background */}
       <AnimatedGrid className="z-0 opacity-50" />
 
-      {/* Floating Particles */}
-      <FloatingParticles count={60} className="z-5" />
+      {/* Floating Particles - Reduced count */}
+      <FloatingParticles count={20} className="z-5" />
 
-      {/* Spline 3D Background - Only in Dark Mode */}
+      {/* Spline 3D Background - Only in Dark Mode and Desktop */}
       {mode === 'dark' ? (
         <>
-          <div className="absolute inset-0 z-10">
+          <div className="absolute inset-0 z-10 hidden md:block">
             <Suspense fallback={
               <div className="w-full h-full bg-gradient-to-b from-background to-secondary/20" />
             }>
@@ -81,6 +81,9 @@ const HeroSection: React.FC = () => {
               />
             </Suspense>
           </div>
+
+          {/* Mobile Fallback for Spline */}
+          <div className="absolute inset-0 z-10 md:hidden bg-gradient-to-b from-background via-secondary/10 to-background" />
 
           {/* Multiple Gradient Overlays for depth - Dark Mode */}
           <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background z-15" />

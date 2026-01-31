@@ -3,7 +3,7 @@ import { GraduationCap, Calendar, MapPin, Award, BookOpen, Trophy, Zap } from "l
 import FloatingParticles from "@/components/backgrounds/FloatingParticles";
 
 const educationData = [
-     {
+  {
     degree: "Master of  Computer Application",
     institution: "Periyar University",
     location: "Salem, Tamil Nadu",
@@ -54,12 +54,12 @@ const EducationSection: React.FC = () => {
   return (
     <section id="education" className="py-32 relative overflow-hidden">
       {/* Background Effects */}
-      <FloatingParticles count={20} className="opacity-20" />
-      
-      <motion.div 
+      <FloatingParticles count={10} className="opacity-20" />
+
+      <motion.div
         className="absolute top-1/4 right-0 w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full opacity-20"
         style={{ background: "var(--gradient-glow)" }}
-        animate={{ 
+        animate={{
           scale: [1, 1.2, 1],
           rotate: [0, 90, 0],
         }}
@@ -86,7 +86,7 @@ const EducationSection: React.FC = () => {
               <GraduationCap className="w-10 h-10 text-primary" />
             </div>
           </motion.div>
-          
+
           <h2 className="text-5xl md:text-6xl font-display font-bold mb-6">
             <span className="gradient-text">Education</span> & Learning
           </h2>
@@ -124,16 +124,15 @@ const EducationSection: React.FC = () => {
                 {/* Content Card */}
                 <motion.div
                   whileHover={{ scale: 1.02, y: -5 }}
-                  className={`flex-1 glass-effect rounded-2xl p-8 border border-primary/20 hover:border-primary/50 transition-all ${
-                    index % 2 === 0 ? 'md:text-right' : ''
-                  }`}
+                  className={`flex-1 glass-effect rounded-2xl p-8 border border-primary/20 hover:border-primary/50 transition-all ${index % 2 === 0 ? 'md:text-right' : ''
+                    }`}
                   style={{
                     boxShadow: `0 0 30px ${edu.color}20`,
                   }}
                 >
                   {/* Header */}
                   <div className="flex items-start gap-4 mb-6">
-                    <div 
+                    <div
                       className="w-14 h-14 rounded-xl glass-effect flex items-center justify-center border-2"
                       style={{ borderColor: edu.color }}
                     >

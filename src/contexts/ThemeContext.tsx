@@ -13,19 +13,19 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [mode, setMode] = useState<Mode>('dark');
+  const [mode, setMode] = useState<Mode>('light');
   const [colorTheme, setColorTheme] = useState<ColorTheme>('cyan');
 
   useEffect(() => {
     const root = document.documentElement;
-    
+
     // Apply mode
     if (mode === 'light') {
       root.classList.add('light');
     } else {
       root.classList.remove('light');
     }
-    
+
     // Apply color theme
     if (colorTheme === 'cyan') {
       root.removeAttribute('data-theme');

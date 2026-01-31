@@ -110,12 +110,12 @@ const AchievementsSection: React.FC = () => {
   return (
     <section id="achievements" className="py-32 relative overflow-hidden">
       {/* Background Effects */}
-      <FloatingParticles count={30} className="opacity-20" />
-      
-      <motion.div 
+      <FloatingParticles count={15} className="opacity-20" />
+
+      <motion.div
         className="absolute top-0 left-0 w-[400px] h-[400px] md:w-[800px] md:h-[800px] rounded-full opacity-20"
         style={{ background: "var(--gradient-glow)" }}
-        animate={{ 
+        animate={{
           scale: [1, 1.3, 1],
           x: [0, 100, 0],
           y: [0, -50, 0],
@@ -143,7 +143,7 @@ const AchievementsSection: React.FC = () => {
               <Trophy className="w-10 h-10 text-primary" />
             </div>
           </motion.div>
-          
+
           <h2 className="text-5xl md:text-6xl font-display font-bold mb-6">
             <GlitchText text="Achievements" className="gradient-text" />
           </h2>
@@ -160,8 +160,8 @@ const AchievementsSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="max-w-7xl mx-auto mb-24"
         >
-          <Carousel 
-            opts={{ 
+          <Carousel
+            opts={{
               align: "start",
               loop: true,
             }}
@@ -237,8 +237,8 @@ const AchievementsSection: React.FC = () => {
                             {/* White background behind image for better visibility */}
                             <div className="absolute inset-0 bg-white" />
                             <div className="absolute inset-0 border-2 border-primary/30 group-hover:border-primary transition-colors rounded-2xl" style={{ boxShadow: `0 0 30px ${achievement.color}40` }} />
-                            <img 
-                              src={img} 
+                            <img
+                              src={img}
                               alt={`${achievement.title} ${idx + 1}`}
                               className="relative w-full h-full object-cover"
                             />
@@ -335,25 +335,25 @@ const AchievementsSection: React.FC = () => {
                 className="glass-effect rounded-2xl p-6 border border-primary/20 hover:border-primary/50 transition-all"
                 style={{ boxShadow: `0 0 30px ${achievement.color}20` }}
               >
-                <div 
+                <div
                   className="w-16 h-16 rounded-xl glass-effect flex items-center justify-center mb-4 border-2"
                   style={{ borderColor: achievement.color }}
                 >
                   <achievement.icon className="w-8 h-8" style={{ color: achievement.color }} />
                 </div>
-                
+
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="text-xl font-display font-bold text-foreground flex-1">
                     {achievement.title}
                   </h4>
-                  <span 
+                  <span
                     className="text-xs font-mono font-bold px-3 py-1 rounded-full glass-effect border-2"
                     style={{ borderColor: achievement.color, color: achievement.color }}
                   >
                     {achievement.year}
                   </span>
                 </div>
-                
+
                 <p className="text-muted-foreground leading-relaxed">{achievement.description}</p>
               </motion.div>
             ))}
