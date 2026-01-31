@@ -73,9 +73,8 @@ const Navigation: React.FC = () => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled ? "glass-effect py-4" : "py-6"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? "glass-effect py-4" : "py-6"
+          }`}
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
@@ -95,11 +94,10 @@ const Navigation: React.FC = () => {
                 <motion.button
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
-                  className={`relative text-sm font-medium transition-colors ${
-                    activeSection === item.href.slice(1)
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`relative text-sm font-medium transition-colors ${activeSection === item.href.slice(1)
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                   whileHover={{ y: -2 }}
                 >
                   {item.label}
@@ -114,13 +112,13 @@ const Navigation: React.FC = () => {
               <ThemeControls />
             </div>
 
-            {/* Mobile Menu Button and Theme Controls */}
+            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-2">
-              <ThemeControls />
               <motion.button
                 className="p-2 rounded-lg glass-effect"
                 onClick={() => setIsOpen(!isOpen)}
                 whileTap={{ scale: 0.95 }}
+                aria-label="Toggle Menu"
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </motion.button>
@@ -142,6 +140,7 @@ const Navigation: React.FC = () => {
           >
             <div className="absolute inset-0 bg-background/95 backdrop-blur-xl">
               <div className="flex flex-col items-center justify-center h-full gap-8 px-6">
+                <ThemeControls />
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.label}
@@ -150,11 +149,10 @@ const Navigation: React.FC = () => {
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => handleNavClick(item.href)}
-                    className={`text-2xl font-display font-bold ${
-                      activeSection === item.href.slice(1)
-                        ? "gradient-text"
-                        : "text-foreground"
-                    }`}
+                    className={`text-2xl font-display font-bold ${activeSection === item.href.slice(1)
+                      ? "gradient-text"
+                      : "text-foreground"
+                      }`}
                   >
                     {item.label}
                   </motion.button>

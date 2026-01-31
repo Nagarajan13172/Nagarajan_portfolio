@@ -172,14 +172,14 @@ const HeroSection: React.FC = () => {
             <div className="mb-6">
               <GlitchText
                 text="Nagarajan"
-                className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground"
+                className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground"
                 speed={0.3}
                 enableShadows={true}
               />
             </div>
 
             {/* Role with Typewriter */}
-            <div className="text-xl md:text-3xl lg:text-4xl font-display font-semibold mb-4">
+            <div className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-display font-semibold mb-4 min-h-[3rem] sm:min-h-[auto]">
               <TypewriterText
                 words={roles}
                 typeSpeed={80}
@@ -314,7 +314,7 @@ const HeroSection: React.FC = () => {
               />
 
               {/* Photo Container */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                 <motion.div
                   className="absolute inset-0 rounded-full glass-effect overflow-hidden border-4 border-primary/30"
                   whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary))" }}
@@ -346,8 +346,8 @@ const HeroSection: React.FC = () => {
                         parent.innerHTML = `
                           <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
                             <div class="text-center">
-                              <div class="text-7xl md:text-8xl lg:text-9xl font-display font-bold gradient-text mb-4">JD</div>
-                              <p class="text-sm text-muted-foreground">Add your photo at<br/>/public/profile-photo.jpg</p>
+                              <div class="text-5xl md:text-8xl lg:text-9xl font-display font-bold gradient-text mb-4">JD</div>
+                              <p class="text-xs md:text-sm text-muted-foreground">Add your photo at<br/>/public/profile-photo.jpg</p>
                             </div>
                           </div>
                         `;
@@ -359,13 +359,13 @@ const HeroSection: React.FC = () => {
                 {/* Decorative rings */}
                 <motion.div
                   className="absolute inset-0 rounded-full border-2 border-primary/20"
-                  style={{ padding: "1rem" }}
+                  style={{ padding: "0.5rem" }}
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 />
                 <motion.div
                   className="absolute inset-0 rounded-full border-2 border-primary/10"
-                  style={{ padding: "2rem" }}
+                  style={{ padding: "1rem" }}
                   animate={{ rotate: -360 }}
                   transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                 />

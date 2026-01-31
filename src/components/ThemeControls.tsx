@@ -16,17 +16,17 @@ const ThemeControls: React.FC = () => {
   const [showPalette, setShowPalette] = useState(false);
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 md:gap-3">
       {/* Color Palette Picker */}
       <div className="relative">
         <motion.button
           onClick={() => setShowPalette(!showPalette)}
-          className="p-3 rounded-full glass-effect hover:bg-secondary/50 transition-colors"
+          className="p-2 md:p-3 rounded-full glass-effect hover:bg-secondary/50 transition-colors"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Change color theme"
         >
-          <Palette className="w-5 h-5 text-foreground" />
+          <Palette className="w-4 h-4 md:w-5 md:h-5 text-foreground" />
         </motion.button>
 
         <AnimatePresence>
@@ -35,7 +35,7 @@ const ThemeControls: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -10 }}
-              className="absolute right-0 top-14 p-3 rounded-xl glass-effect shadow-lg"
+              className="absolute right-0 top-12 md:top-14 p-2 md:p-3 rounded-xl glass-effect shadow-lg z-50"
             >
               <div className="flex gap-2">
                 {colorThemes.map((theme) => (
@@ -45,9 +45,8 @@ const ThemeControls: React.FC = () => {
                       setColorTheme(theme.id);
                       setShowPalette(false);
                     }}
-                    className={`w-8 h-8 rounded-full transition-all ${
-                      colorTheme === theme.id ? "ring-2 ring-foreground ring-offset-2 ring-offset-background" : ""
-                    }`}
+                    className={`w-6 h-6 md:w-8 md:h-8 rounded-full transition-all ${colorTheme === theme.id ? "ring-2 ring-foreground ring-offset-2 ring-offset-background" : ""
+                      }`}
                     style={{ backgroundColor: `hsl(${theme.color})` }}
                     whileHover={{ scale: 1.15 }}
                     whileTap={{ scale: 0.95 }}
@@ -63,7 +62,7 @@ const ThemeControls: React.FC = () => {
       {/* Dark/Light Mode Toggle */}
       <motion.button
         onClick={toggleMode}
-        className="p-3 rounded-full glass-effect hover:bg-secondary/50 transition-colors"
+        className="p-2 md:p-3 rounded-full glass-effect hover:bg-secondary/50 transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
@@ -77,7 +76,7 @@ const ThemeControls: React.FC = () => {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <Sun className="w-5 h-5 text-foreground" />
+              <Sun className="w-4 h-4 md:w-5 md:h-5 text-foreground" />
             </motion.div>
           ) : (
             <motion.div
@@ -87,7 +86,7 @@ const ThemeControls: React.FC = () => {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <Moon className="w-5 h-5 text-foreground" />
+              <Moon className="w-4 h-4 md:w-5 md:h-5 text-foreground" />
             </motion.div>
           )}
         </AnimatePresence>

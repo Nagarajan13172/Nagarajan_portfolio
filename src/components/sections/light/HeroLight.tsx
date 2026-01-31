@@ -77,7 +77,7 @@ const HeroLight: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
             >
               <span className="text-foreground">Hi, I'm</span>
               <br />
@@ -181,7 +181,7 @@ const HeroLight: React.FC = () => {
             />
 
             {/* Image container */}
-            <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl shadow-primary/20">
+            <div className="relative w-48 h-48 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl shadow-primary/20">
               <motion.img
                 ref={imageRef}
                 src={heroImage}
@@ -206,7 +206,7 @@ const HeroLight: React.FC = () => {
                     parent.innerHTML = `
                       <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
                         <div class="text-center">
-                          <div class="text-8xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">N</div>
+                          <div class="text-6xl md:text-8xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">N</div>
                         </div>
                       </div>
                     `;

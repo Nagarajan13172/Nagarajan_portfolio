@@ -28,11 +28,11 @@ const skillCategories = {
   ],
 };
 
-const AnimatedSkillBar: React.FC<{ 
-  name: string; 
-  level: number; 
+const AnimatedSkillBar: React.FC<{
+  name: string;
+  level: number;
   color: string;
-  index: number 
+  index: number
 }> = ({ name, level, color, index }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -47,13 +47,13 @@ const AnimatedSkillBar: React.FC<{
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex justify-between items-center">
-        <motion.span 
+        <motion.span
           className="font-medium text-foreground"
           animate={{ x: isHovered ? 5 : 0 }}
         >
           {name}
         </motion.span>
-        <motion.span 
+        <motion.span
           className="text-sm font-mono"
           style={{ color }}
           animate={{ scale: isHovered ? 1.1 : 1 }}
@@ -79,10 +79,10 @@ const AnimatedSkillBar: React.FC<{
           {/* Glow */}
           <motion.div
             className="absolute inset-0 rounded-full"
-            animate={{ 
-              boxShadow: isHovered 
-                ? `0 0 20px ${color}, 0 0 40px ${color}` 
-                : `0 0 10px ${color}` 
+            animate={{
+              boxShadow: isHovered
+                ? `0 0 20px ${color}, 0 0 40px ${color}`
+                : `0 0 10px ${color}`
             }}
           />
         </motion.div>
@@ -91,7 +91,7 @@ const AnimatedSkillBar: React.FC<{
           <motion.div
             className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
             style={{ backgroundColor: color, left: `${level}%` }}
-            animate={{ 
+            animate={{
               scale: [1, 2, 1],
               opacity: [1, 0.5, 1],
             }}
@@ -108,7 +108,7 @@ const SkillsSection: React.FC = () => {
     <section id="skills" className="py-32 relative overflow-hidden">
       {/* Background */}
       <FloatingParticles count={30} className="opacity-30" />
-      
+
       {/* Animated background gradient */}
       <motion.div
         className="absolute inset-0 opacity-20"
@@ -120,9 +120,9 @@ const SkillsSection: React.FC = () => {
         }}
         transition={{ duration: 10, repeat: Infinity }}
       />
-      
+
       {/* Glow */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-0 left-0 w-[800px] h-[800px] rounded-full opacity-20 translate-y-1/2 -translate-x-1/2"
         style={{ background: "var(--gradient-glow)" }}
         animate={{ scale: [1, 1.1, 1] }}
@@ -131,7 +131,7 @@ const SkillsSection: React.FC = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <FadeInSection className="text-center mb-16">
-          <motion.span 
+          <motion.span
             className="inline-block px-4 py-2 rounded-full glass-effect text-sm font-mono text-primary mb-6"
             whileHover={{ scale: 1.05 }}
             animate={{
@@ -147,7 +147,7 @@ const SkillsSection: React.FC = () => {
           </motion.span>
           <GlitchText
             text="Technologies I Work With"
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold"
             speed={0.4}
             enableOnHover={true}
           />
@@ -158,16 +158,16 @@ const SkillsSection: React.FC = () => {
           <div className="text-center mb-8">
             <p className="text-muted-foreground">Click and drag the skills below!</p>
           </div>
-          <div className="h-[300px] rounded-3xl card-gradient border border-border/50 overflow-hidden">
+          <div className="h-[400px] md:h-[300px] rounded-3xl card-gradient border border-border/50 overflow-hidden">
             <GravitySkills skills={allSkills} className="w-full h-full" />
           </div>
         </FadeInSection>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Frontend */}
           <FadeInSection delay={0.1}>
-            <motion.div 
-              className="p-8 rounded-3xl card-gradient border border-border/50 h-full relative overflow-hidden group"
+            <motion.div
+              className="p-6 md:p-8 rounded-3xl card-gradient border border-border/50 h-full relative overflow-hidden group"
               whileHover={{ y: -5 }}
             >
               {/* Hover glow effect */}
@@ -177,17 +177,17 @@ const SkillsSection: React.FC = () => {
                   background: "radial-gradient(circle at center, hsl(var(--primary) / 0.1), transparent 70%)",
                 }}
               />
-              
+
               <div className="flex items-center gap-3 mb-8 relative z-10">
-                <motion.div 
-                  className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center"
+                <motion.div
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-primary/10 flex items-center justify-center"
                   animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 >
-                  <span className="text-3xl">🎨</span>
+                  <span className="text-2xl md:text-3xl">🎨</span>
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-bold">Frontend</h3>
+                  <h3 className="text-xl md:text-2xl font-bold">Frontend</h3>
                   <p className="text-sm text-muted-foreground">UI & Interfaces</p>
                 </div>
               </div>
@@ -201,8 +201,8 @@ const SkillsSection: React.FC = () => {
 
           {/* Backend */}
           <FadeInSection delay={0.2}>
-            <motion.div 
-              className="p-8 rounded-3xl card-gradient border border-border/50 h-full relative overflow-hidden group"
+            <motion.div
+              className="p-6 md:p-8 rounded-3xl card-gradient border border-border/50 h-full relative overflow-hidden group"
               whileHover={{ y: -5 }}
             >
               <motion.div
@@ -211,17 +211,17 @@ const SkillsSection: React.FC = () => {
                   background: "radial-gradient(circle at center, hsl(270 100% 65% / 0.1), transparent 70%)",
                 }}
               />
-              
+
               <div className="flex items-center gap-3 mb-8 relative z-10">
-                <motion.div 
-                  className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center"
+                <motion.div
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-primary/10 flex items-center justify-center"
                   animate={{ rotate: [0, -5, 5, 0] }}
                   transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
                 >
-                  <span className="text-3xl">⚙️</span>
+                  <span className="text-2xl md:text-3xl">⚙️</span>
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-bold">Backend</h3>
+                  <h3 className="text-xl md:text-2xl font-bold">Backend</h3>
                   <p className="text-sm text-muted-foreground">Server & Database</p>
                 </div>
               </div>

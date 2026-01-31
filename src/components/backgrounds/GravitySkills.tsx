@@ -16,7 +16,7 @@ const GravitySkills: React.FC<GravitySkillsProps> = ({ skills, className = "" })
 
   useEffect(() => {
     if (!containerRef.current) return;
-    
+
     const updateDimensions = () => {
       if (containerRef.current) {
         setDimensions({
@@ -82,14 +82,19 @@ const GravitySkills: React.FC<GravitySkillsProps> = ({ skills, className = "" })
       "hsl(340, 100%, 60%)",
     ];
 
+    const isMobile = dimensions.width < 768;
+    const fontSize = isMobile ? 12 : 14;
+    const charWidth = isMobile ? 8 : 12;
+    const padding = isMobile ? 24 : 40;
+    const height = isMobile ? 32 : 40;
+
     const skillBodies = skills.map((skill, index) => {
-      const width = skill.length * 12 + 40;
-      const height = 40;
+      const width = skill.length * charWidth + padding;
       const x = Math.random() * (dimensions.width - width) + width / 2;
       const y = -100 - index * 80;
 
       return Bodies.rectangle(x, y, width, height, {
-        chamfer: { radius: 20 },
+        chamfer: { radius: height / 2 },
         restitution: 0.6,
         friction: 0.1,
         render: {
@@ -119,7 +124,7 @@ const GravitySkills: React.FC<GravitySkillsProps> = ({ skills, className = "" })
         ctx.save();
         ctx.translate(body.position.x, body.position.y);
         ctx.rotate(body.angle);
-        ctx.font = "bold 14px 'Syne', sans-serif";
+        ctx.font = `bold ${fontSize}px 'Syne', sans-serif`;
         ctx.fillStyle = "#0a0a0f";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
