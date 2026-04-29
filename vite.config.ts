@@ -19,34 +19,18 @@ export default defineConfig(({ mode }) => ({
     target: "es2020",
     cssCodeSplit: true,
     sourcemap: false,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          if (!id.includes("node_modules")) return undefined;
-
-          // Heavy, optional, lazy-loaded libs each get their own chunk.
-          if (id.includes("@splinetool")) return "vendor-spline";
-          if (id.includes("matter-js")) return "vendor-matter";
-          if (id.includes("gsap")) return "vendor-gsap";
-          if (id.includes("recharts")) return "vendor-recharts";
-          if (id.includes("firebase")) return "vendor-firebase";
-          if (id.includes("framer-motion") || id.includes("/motion/")) {
-            return "vendor-motion";
-          }
-          if (id.includes("@radix-ui")) return "vendor-radix";
-          if (id.includes("lucide-react")) return "vendor-icons";
-          if (id.includes("react-router") || id.includes("@tanstack")) {
-            return "vendor-router";
-          }
-          if (
-            id.includes("react/") ||
-            id.includes("react-dom/") ||
-            id.includes("/scheduler/")
-          ) {
-            return "vendor-react";
-          }
-          return "vendor";
+        // Only split out heavy / optional libs. React, Radix, motion etc. stay
+        // in the main bundle so Rollup doesn't reorder createContext-using
+        // modules ahead of React's initialization.
+        manualChunks: {
+          "vendor-spline": ["@splinetool/react-spline", "@splinetool/runtime"],
+          "vendor-matter": ["matter-js"],
+          "vendor-gsap": ["gsap", "@gsap/react"],
+          "vendor-recharts": ["recharts"],
+          "vendor-firebase": ["firebase/app", "firebase/firestore"],
         },
       },
     },
