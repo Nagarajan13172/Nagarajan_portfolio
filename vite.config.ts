@@ -15,4 +15,40 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "es2020",
+    cssCodeSplit: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (!id.includes("node_modules")) return undefined;
+
+          // Heavy, optional, lazy-loaded libs each get their own chunk.
+          if (id.includes("@splinetool")) return "vendor-spline";
+          if (id.includes("matter-js")) return "vendor-matter";
+          if (id.includes("gsap")) return "vendor-gsap";
+          if (id.includes("recharts")) return "vendor-recharts";
+          if (id.includes("firebase")) return "vendor-firebase";
+          if (id.includes("framer-motion") || id.includes("/motion/")) {
+            return "vendor-motion";
+          }
+          if (id.includes("@radix-ui")) return "vendor-radix";
+          if (id.includes("lucide-react")) return "vendor-icons";
+          if (id.includes("react-router") || id.includes("@tanstack")) {
+            return "vendor-router";
+          }
+          if (
+            id.includes("react/") ||
+            id.includes("react-dom/") ||
+            id.includes("/scheduler/")
+          ) {
+            return "vendor-react";
+          }
+          return "vendor";
+        },
+      },
+    },
+  },
 }));

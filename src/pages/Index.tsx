@@ -1,26 +1,52 @@
+import { lazy, Suspense } from "react";
 import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import Navigation from "@/components/Navigation";
-
-// Dark mode sections
-import HeroSection from "@/components/sections/HeroSection";
-import AboutSection from "@/components/sections/AboutSection";
-import SkillsSection from "@/components/sections/SkillsSection";
-import EducationSection from "@/components/sections/EducationSection";
-import AchievementsSection from "@/components/sections/AchievementsSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import ContactSection from "@/components/sections/ContactSection";
-
-// Light mode sections
-import HeroLight from "@/components/sections/light/HeroLight";
-import AboutLight from "@/components/sections/light/AboutLight";
-import SkillsLight from "@/components/sections/light/SkillsLight";
-import EducationLight from "@/components/sections/light/EducationLight";
-import AchievementsLight from "@/components/sections/light/AchievementsLight";
-import ProjectsLight from "@/components/sections/light/ProjectsLight";
-import ContactLight from "@/components/sections/light/ContactLight";
-
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "motion/react";
+
+// Hero loads eagerly so the first paint is meaningful.
+import HeroSection from "@/components/sections/HeroSection";
+import HeroLight from "@/components/sections/light/HeroLight";
+
+// Below-the-fold sections are split into per-mode chunks so a visitor
+// only downloads what their current theme actually uses.
+const AboutSection = lazy(() => import("@/components/sections/AboutSection"));
+const SkillsSection = lazy(() => import("@/components/sections/SkillsSection"));
+const EducationSection = lazy(() =>
+  import("@/components/sections/EducationSection")
+);
+const AchievementsSection = lazy(() =>
+  import("@/components/sections/AchievementsSection")
+);
+const ProjectsSection = lazy(() =>
+  import("@/components/sections/ProjectsSection")
+);
+const ContactSection = lazy(() =>
+  import("@/components/sections/ContactSection")
+);
+
+const AboutLight = lazy(() =>
+  import("@/components/sections/light/AboutLight")
+);
+const SkillsLight = lazy(() =>
+  import("@/components/sections/light/SkillsLight")
+);
+const EducationLight = lazy(() =>
+  import("@/components/sections/light/EducationLight")
+);
+const AchievementsLight = lazy(() =>
+  import("@/components/sections/light/AchievementsLight")
+);
+const ProjectsLight = lazy(() =>
+  import("@/components/sections/light/ProjectsLight")
+);
+const ContactLight = lazy(() =>
+  import("@/components/sections/light/ContactLight")
+);
+
+const SectionFallback: React.FC = () => (
+  <div className="min-h-[40vh] w-full" aria-hidden="true" />
+);
 
 const MainContent = () => {
   const { mode } = useTheme();
@@ -34,27 +60,29 @@ const MainContent = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {mode === 'dark' ? (
-          // Dark Mode Layout
+        {mode === "dark" ? (
           <main>
             <HeroSection />
-            <AboutSection />
-            <SkillsSection />
-            <EducationSection />
-            <AchievementsSection />
-            <ProjectsSection />
-            <ContactSection />
+            <Suspense fallback={<SectionFallback />}>
+              <AboutSection />
+              <SkillsSection />
+              <EducationSection />
+              <AchievementsSection />
+              <ProjectsSection />
+              <ContactSection />
+            </Suspense>
           </main>
         ) : (
-          // Light Mode Layout
           <main>
             <HeroLight />
-            <AboutLight />
-            <SkillsLight />
-            <EducationLight />
-            <AchievementsLight />
-            <ProjectsLight />
-            <ContactLight />
+            <Suspense fallback={<SectionFallback />}>
+              <AboutLight />
+              <SkillsLight />
+              <EducationLight />
+              <AchievementsLight />
+              <ProjectsLight />
+              <ContactLight />
+            </Suspense>
           </main>
         )}
       </motion.div>

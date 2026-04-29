@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { usePerformance } from "@/hooks/use-performance";
 
 interface GlitchTextProps {
   text: string;
@@ -18,17 +19,23 @@ const GlitchText: React.FC<GlitchTextProps> = ({
   enableOnHover = false,
   glitchColors = ["hsl(var(--primary))", "hsl(340 100% 60%)"],
 }) => {
+  const { isLowEnd, enableHeavyEffects } = usePerformance();
   const [isHovered, setIsHovered] = useState(false);
   const [glitchKey, setGlitchKey] = useState(0);
 
   useEffect(() => {
+    if (isLowEnd) return;
     if (!enableOnHover) {
       const interval = setInterval(() => {
         setGlitchKey((prev) => prev + 1);
       }, 3000);
       return () => clearInterval(interval);
     }
-  }, [enableOnHover]);
+  }, [enableOnHover, isLowEnd]);
+
+  if (isLowEnd) {
+    return <span className={`inline-block ${className}`}>{text}</span>;
+  }
 
   const shouldAnimate = enableOnHover ? isHovered : true;
 
@@ -38,10 +45,8 @@ const GlitchText: React.FC<GlitchTextProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Main text */}
       <span className="relative z-10">{text}</span>
-      
-      {/* Glitch layer 1 */}
+
       <motion.span
         key={`glitch1-${glitchKey}`}
         className="absolute inset-0 z-0"
@@ -49,10 +54,14 @@ const GlitchText: React.FC<GlitchTextProps> = ({
           color: glitchColors[0],
           textShadow: enableShadows ? `2px 0 ${glitchColors[0]}` : "none",
         }}
-        animate={shouldAnimate ? {
-          x: [-2, 2, -2, 0],
-          opacity: [0, 1, 0, 0],
-        } : {}}
+        animate={
+          shouldAnimate
+            ? {
+                x: [-2, 2, -2, 0],
+                opacity: [0, 1, 0, 0],
+              }
+            : {}
+        }
         transition={{
           duration: speed,
           repeat: Infinity,
@@ -64,7 +73,6 @@ const GlitchText: React.FC<GlitchTextProps> = ({
         {text}
       </motion.span>
 
-      {/* Glitch layer 2 */}
       <motion.span
         key={`glitch2-${glitchKey}`}
         className="absolute inset-0 z-0"
@@ -72,10 +80,14 @@ const GlitchText: React.FC<GlitchTextProps> = ({
           color: glitchColors[1],
           textShadow: enableShadows ? `-2px 0 ${glitchColors[1]}` : "none",
         }}
-        animate={shouldAnimate ? {
-          x: [2, -2, 2, 0],
-          opacity: [0, 1, 0, 0],
-        } : {}}
+        animate={
+          shouldAnimate
+            ? {
+                x: [2, -2, 2, 0],
+                opacity: [0, 1, 0, 0],
+              }
+            : {}
+        }
         transition={{
           duration: speed,
           repeat: Infinity,
@@ -88,8 +100,7 @@ const GlitchText: React.FC<GlitchTextProps> = ({
         {text}
       </motion.span>
 
-      {/* Scanline effect */}
-      {shouldAnimate && (
+      {shouldAnimate && enableHeavyEffects && (
         <motion.div
           className="absolute inset-0 pointer-events-none z-20"
           style={{

@@ -1,4 +1,3 @@
-import Spline from "@splinetool/react-spline";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import GlitchText from "@/components/animations/GlitchText";
 import FlickerText from "@/components/animations/FlickerText";
@@ -9,14 +8,18 @@ import FloatingParticles from "@/components/backgrounds/FloatingParticles";
 import AnimatedGrid from "@/components/backgrounds/AnimatedGrid";
 import { ArrowDown, Github, Linkedin, Mail, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero.png";
-import { Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { usePerformance } from "@/hooks/use-performance";
+
+const Spline = lazy(() => import("@splinetool/react-spline"));
 
 const HeroSection: React.FC = () => {
   const { mode } = useTheme();
+  const { enableSpline, enableHeavyEffects, enableMouseTracking, isLowEnd } =
+    usePerformance();
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // Parallax effect
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -25,23 +28,25 @@ const HeroSection: React.FC = () => {
   const y = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
 
   useEffect(() => {
+    if (!enableMouseTracking) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (imageRef.current) {
         const rect = imageRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        const x = (e.clientX - centerX) / rect.width;
-        const y = (e.clientY - centerY) / rect.height;
+        const dx = (e.clientX - centerX) / rect.width;
+        const dy = (e.clientY - centerY) / rect.height;
 
-        mouseX.set(x);
-        mouseY.set(y);
+        mouseX.set(dx);
+        mouseY.set(dy);
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY, enableMouseTracking]);
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById("about");
@@ -57,45 +62,48 @@ const HeroSection: React.FC = () => {
     "Problem Solver",
   ];
 
+  const photoFloat = isLowEnd
+    ? undefined
+    : {
+        rotate: [0, 0.5, -0.5, 0.5, 0],
+        scale: [1, 1.02, 0.98, 1.02, 1],
+      };
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient"
     >
-      {/* Animated Grid Background */}
       <AnimatedGrid className="z-0 opacity-50" />
 
-      {/* Floating Particles - Reduced count */}
       <FloatingParticles count={20} className="z-5" />
 
-      {/* Spline 3D Background - Only in Dark Mode and Desktop */}
       {mode === 'dark' ? (
         <>
-          <div className="absolute inset-0 z-10 hidden md:block">
-            <Suspense fallback={
-              <div className="w-full h-full bg-gradient-to-b from-background to-secondary/20" />
-            }>
-              <Spline
-                scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
-                className="w-full h-full"
-              />
-            </Suspense>
-          </div>
+          {enableSpline ? (
+            <div className="absolute inset-0 z-10 hidden md:block">
+              <Suspense fallback={
+                <div className="w-full h-full bg-gradient-to-b from-background to-secondary/20" />
+              }>
+                <Spline
+                  scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+                  className="w-full h-full"
+                />
+              </Suspense>
+            </div>
+          ) : (
+            <div className="absolute inset-0 z-10 hidden md:block bg-gradient-to-b from-background via-secondary/10 to-background" />
+          )}
 
-          {/* Mobile Fallback for Spline */}
           <div className="absolute inset-0 z-10 md:hidden bg-gradient-to-b from-background via-secondary/10 to-background" />
 
-          {/* Multiple Gradient Overlays for depth - Dark Mode */}
           <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background z-15" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30 z-15" />
         </>
       ) : (
-        /* Light Mode Clean Background - Similar to reference */
         <>
-          {/* Base white/light background */}
           <div className="absolute inset-0 bg-background z-10" />
 
-          {/* Grid pattern background */}
           <div className="absolute inset-0 z-11" style={{
             backgroundImage: `
               linear-gradient(to right, hsl(var(--primary)/0.1) 1px, transparent 1px),
@@ -104,14 +112,12 @@ const HeroSection: React.FC = () => {
             backgroundSize: '50px 50px'
           }} />
 
-          {/* Subtle gradient glow spots */}
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl z-12" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl z-12" />
         </>
       )}
 
-      {/* Animated Glow Orbs - Only in Dark Mode */}
-      {mode === 'dark' && (
+      {mode === 'dark' && enableHeavyEffects && (
         <>
           <motion.div
             className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full z-5"
@@ -136,13 +142,10 @@ const HeroSection: React.FC = () => {
         </>
       )}
 
-      {/* Content */}
       <div className="relative z-20 container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto">
 
-          {/* Left Side - Text Content */}
           <div className="flex-1 text-center lg:text-left">
-            {/* Animated Badge */}
             <motion.div
               initial={{ opacity: 0, y: 30, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -152,17 +155,21 @@ const HeroSection: React.FC = () => {
               <motion.span
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full glass-effect text-sm font-mono text-primary"
                 whileHover={{ scale: 1.05 }}
-                animate={{
-                  boxShadow: [
-                    "0 0 20px hsl(var(--primary) / 0.2)",
-                    "0 0 40px hsl(var(--primary) / 0.4)",
-                    "0 0 20px hsl(var(--primary) / 0.2)",
-                  ],
-                }}
+                animate={
+                  enableHeavyEffects
+                    ? {
+                        boxShadow: [
+                          "0 0 20px hsl(var(--primary) / 0.2)",
+                          "0 0 40px hsl(var(--primary) / 0.4)",
+                          "0 0 20px hsl(var(--primary) / 0.2)",
+                        ],
+                      }
+                    : undefined
+                }
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 <motion.span
-                  animate={{ rotate: [0, 15, -15, 0] }}
+                  animate={enableHeavyEffects ? { rotate: [0, 15, -15, 0] } : undefined}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   <Sparkles className="w-4 h-4" />
@@ -171,7 +178,6 @@ const HeroSection: React.FC = () => {
               </motion.span>
             </motion.div>
 
-            {/* Name with Glitch Effect */}
             <div className="mb-6">
               <GlitchText
                 text="Nagarajan"
@@ -181,7 +187,6 @@ const HeroSection: React.FC = () => {
               />
             </div>
 
-            {/* Role with Typewriter */}
             <div className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-display font-semibold mb-4 min-h-[3rem] sm:min-h-[auto]">
               <TypewriterText
                 words={roles}
@@ -191,7 +196,6 @@ const HeroSection: React.FC = () => {
               />
             </div>
 
-            {/* Subtitle with Flicker Effect */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -205,7 +209,6 @@ const HeroSection: React.FC = () => {
               />
             </motion.div>
 
-            {/* Description */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -218,7 +221,6 @@ const HeroSection: React.FC = () => {
               </p>
             </motion.div>
 
-            {/* CTA Buttons with Magnet Effect */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -236,7 +238,6 @@ const HeroSection: React.FC = () => {
                     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
                   }}
                 >
-                  {/* Subtle glow effect on hover */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100"
                     initial={{ opacity: 0 }}
@@ -263,7 +264,6 @@ const HeroSection: React.FC = () => {
               </Magnet>
             </motion.div>
 
-            {/* Social Links with Magnet */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -297,7 +297,6 @@ const HeroSection: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Right Side - Profile Photo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: 50 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -305,35 +304,33 @@ const HeroSection: React.FC = () => {
             className="flex-shrink-0"
           >
             <div className="relative">
-              {/* Glow effect behind photo */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{ background: "var(--gradient-glow)", filter: "blur(40px)" }}
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.5, 0.8, 0.5],
-                }}
-                transition={{ duration: 4, repeat: Infinity }}
-              />
+              {enableHeavyEffects && (
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: "var(--gradient-glow)", filter: "blur(40px)" }}
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
+              )}
 
-              {/* Photo Container */}
               <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                 <motion.div
                   className="absolute inset-0 rounded-full glass-effect overflow-hidden border-4 border-primary/30"
                   whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary))" }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Replace this src with your actual photo path */}
                   <motion.img
                     ref={imageRef}
                     src={heroImage}
                     alt="Nagarajan"
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                     style={{ x, y }}
-                    animate={{
-                      rotate: [0, 0.5, -0.5, 0.5, 0],
-                      scale: [1, 1.02, 0.98, 1.02, 1]
-                    }}
+                    animate={photoFloat}
                     transition={{
                       duration: 0.4,
                       repeat: Infinity,
@@ -341,7 +338,6 @@ const HeroSection: React.FC = () => {
                       ease: "easeInOut"
                     }}
                     onError={(e) => {
-                      // Fallback if image doesn't exist
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       const parent = target.parentElement;
@@ -359,26 +355,28 @@ const HeroSection: React.FC = () => {
                   />
                 </motion.div>
 
-                {/* Decorative rings */}
-                <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-primary/20"
-                  style={{ padding: "0.5rem" }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                />
-                <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-primary/10"
-                  style={{ padding: "1rem" }}
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                />
+                {enableHeavyEffects && (
+                  <>
+                    <motion.div
+                      className="absolute inset-0 rounded-full border-2 border-primary/20"
+                      style={{ padding: "0.5rem" }}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-full border-2 border-primary/10"
+                      style={{ padding: "1rem" }}
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Animated Scroll Indicator */}
       <motion.button
         onClick={scrollToAbout}
         initial={{ opacity: 0 }}
@@ -388,14 +386,18 @@ const HeroSection: React.FC = () => {
         aria-label="Scroll to about section"
       >
         <motion.div
-          animate={{
-            y: [0, 15, 0],
-            boxShadow: [
-              "0 0 20px hsl(var(--primary) / 0.3)",
-              "0 0 40px hsl(var(--primary) / 0.6)",
-              "0 0 20px hsl(var(--primary) / 0.3)",
-            ],
-          }}
+          animate={
+            enableHeavyEffects
+              ? {
+                  y: [0, 15, 0],
+                  boxShadow: [
+                    "0 0 20px hsl(var(--primary) / 0.3)",
+                    "0 0 40px hsl(var(--primary) / 0.6)",
+                    "0 0 20px hsl(var(--primary) / 0.3)",
+                  ],
+                }
+              : { y: [0, 8, 0] }
+          }
           transition={{ duration: 2, repeat: Infinity }}
           className="p-4 rounded-full glass-effect border border-primary/30"
         >
@@ -403,7 +405,6 @@ const HeroSection: React.FC = () => {
         </motion.div>
       </motion.button>
 
-      {/* Decorative corners - More prominent in light mode */}
       <div className={`hidden md:block absolute top-20 left-10 w-20 h-20 border-l-2 border-t-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
       <div className={`hidden md:block absolute top-20 right-10 w-20 h-20 border-r-2 border-t-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
       <div className={`hidden md:block absolute bottom-20 left-10 w-20 h-20 border-l-2 border-b-2 z-20 ${mode === 'light' ? 'border-primary/60' : 'border-primary/30'}`} />
